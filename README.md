@@ -3,7 +3,7 @@ Powershell API wrapper for zweef.app an administration system for gliding clubs.
 
 
 # Installation
-1: Download zweefapp.psm1 in a folder of your choice.
+1: Download zweefapp.psm1 in a folder of your choice and change the parameter club in the module if needed (default is the club i'm flying > zvc)
 
 2: Run powershell command import-module zweefapp.psm1
 
