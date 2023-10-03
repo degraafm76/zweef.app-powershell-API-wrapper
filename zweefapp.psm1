@@ -1,7 +1,10 @@
 ######### Parameters ##########
 
 $club = "zvc" #change to your club, can be retreived from the zweefapp URL >> Todo store club on disk
-$client_secret = 'LmwtuTeToDALLZpzDAEG' ### client_secret seems to be fixed for zweef.app, this is a potential security risk because a stolen bearer token can be used on any client.
+$client_secret = 'LmwtuTeToDALLZpzDAEG' ### client_secret is fixed for zweef.app, this is a potential security risk because a stolen bearer token can be used on any client.
+### Client secret methods are the most commonly used authentication mechanisms for regular server OAuth applications, daemons, machine-to-machine or regular web applications. In other words, client secret methods can be used by confidential applications. An application is confidential when it is able to store its client secret securely.
+### On the other hand, client secrets must not be used for public applications like desktop or mobile apps which are not able to store their client secrets securely. Users of such applications have direct access to the code of the app, therefore, it can be decompiled. This may lead to a situation that your client secret is compromised and not safe anymore. Such applications should use authentication set to None and elevate the use of Proof Key for Code Exchange (PKCE).
+
 $bearerTokenPath = $env:LOCALAPPDATA ### path where the bearertoken is stored
 
 
