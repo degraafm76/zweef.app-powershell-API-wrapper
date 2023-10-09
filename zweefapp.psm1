@@ -1,3 +1,4 @@
+#Requires -Version 7.0
 ######### Parameters ##########
 
 $club = "zvc" #change to your club, can be retreived from the zweefapp URL >> Todo store club on disk
@@ -45,11 +46,12 @@ function Connect-ZweefApp {
           [switch]$RefreshBearerToken
      )
      
-     $StoredBearerToken = Get-Content  -Path $bearerTokenPath\zweefappbearertoken.txt | ConvertTo-SecureString
-     $StoredBearerToken = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR((($StoredBearerToken))))
+     $StoredBearerToken = Get-Content  -Path $bearerTokenPath\zweefappbearertoken.txt | ConvertTo-SecureString -ErrorAction SilentlyContinue
+    
 
      
      If ($StoredBearerToken -and !$RefreshBearerToken) {
+          $StoredBearerToken = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR((($StoredBearerToken))))
           Write-Host "[+] Connecting using bearer token found on disk, use parameter -RefreshBearerToken to create a new token" -ForegroundColor Green
           $global:ZweefAppToken = $StoredBearerToken
           break
@@ -77,6 +79,7 @@ function Connect-ZweefApp {
           }
           catch {
                Write-Host ("[+] Wrong credentials") -ForegroundColor Red
+               Break
           }
           ### Store bearer ZweefAppToken in ZweefAppToken variable
           $global:ZweefAppToken = $authResponse.access_token
@@ -196,7 +199,7 @@ function Get-ZweefAppVliegdagAanmeldingen {
           Authorization  = "Bearer $ZweefAppToken"
      }
      $response = Invoke-restmethod -Method Post -Uri $url -Headers $headers -Body ($body | ConvertTo-Json) -ErrorAction Stop 
-     return $response.aanmeldingen  | Where-Object aangemeld -eq "True" |  select @{Name = "Datum"; Expression = {$_.datum}},@{Name = "Naam"; Expression = {$_.vlieger.name}}, @{Name = "Currency"; Expression = { $_.vlieger.currency.currency } }, @{Name = "Lierstarts"; Expression = { $_.vlieger.currency.lier } }, @{Name = "Sleepstarts"; Expression = { $_.vlieger.currency.sleep } }, @{Name = "DBO starts"; Expression = { $_.vlieger.currency.dbo } }, @{Name = "DBO Uren"; Expression = { $_.vlieger.currency.dbo_uren } }, @{Name = "PIC starts"; Expression = { $_.vlieger.currency.pic } }, @{Name = "PIC uren"; Expression = { $_.vlieger.currency.pic_uren } }, @{Name = "Tag"; Expression = { $_.vlieger.currency.tag } }, @{Name = "Opmerking"; Expression = { $_.opmerking } }
+     return $response.aanmeldingen  | Where-Object aangemeld -eq "True" |  select @{Name = "Datum"; Expression = { $_.datum } }, @{Name = "Naam"; Expression = { $_.vlieger.name } }, @{Name = "Currency"; Expression = { $_.vlieger.currency.currency } }, @{Name = "Lierstarts"; Expression = { $_.vlieger.currency.lier } }, @{Name = "Sleepstarts"; Expression = { $_.vlieger.currency.sleep } }, @{Name = "DBO starts"; Expression = { $_.vlieger.currency.dbo } }, @{Name = "DBO Uren"; Expression = { $_.vlieger.currency.dbo_uren } }, @{Name = "PIC starts"; Expression = { $_.vlieger.currency.pic } }, @{Name = "PIC uren"; Expression = { $_.vlieger.currency.pic_uren } }, @{Name = "Tag"; Expression = { $_.vlieger.currency.tag } }, @{Name = "Opmerking"; Expression = { $_.opmerking } }
 
 }
 
