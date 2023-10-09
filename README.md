@@ -1,6 +1,7 @@
 # zweef.app-powershell-API-wrapper
 Powershell API wrapper for zweef.app an administration system for gliding clubs.
 
+Attention: This wrapper doesn't use the very limited official API (https://documenter.getpostman.com/view/25434528/2s8ZDX5PRi) so any changes in the API will break this wrapper.
 
 # Installation
 1: Download zweefapp.psm1 in a folder of your choice and change the club parameter in the module if needed (default is the club i'm flying > zvc)
