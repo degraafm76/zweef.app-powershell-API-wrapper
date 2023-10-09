@@ -46,7 +46,7 @@ function Connect-ZweefApp {
           [switch]$RefreshBearerToken
      )
      
-     $StoredBearerToken = Get-Content  -Path $bearerTokenPath\zweefappbearertoken.txt | ConvertTo-SecureString -ErrorAction SilentlyContinue
+     $StoredBearerToken = Get-Content  -Path $bearerTokenPath\zweefappbearertoken.txt -ErrorAction SilentlyContinue | ConvertTo-SecureString 
     
 
      
